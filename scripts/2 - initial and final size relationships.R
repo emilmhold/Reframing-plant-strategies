@@ -1,12 +1,14 @@
 ## Meso plants initial/final size relationships
 ## Author: Emily H
 ## Created: Novemeber 14, 2024
-## Last edited: January 30, 2025
+## Last edited: February 17, 2025
 
 #install.packages("tidyverse")
 #install.packages("vegan")
 #install.packages("car")
 #install.packages("cowplot")
+#install.packages("lme4")
+#install.packages("lmerTest")
 #devtools::install_github("cttobin/ggthemr")
 
 library(vegan)
@@ -14,6 +16,8 @@ library(tidyverse)
 library(car)
 library(cowplot)
 library(ggthemr)
+library(lme4)
+library(lmerTest)
 
 ggthemr("fresh")
 palette_colors <- ggthemr::swatch()
