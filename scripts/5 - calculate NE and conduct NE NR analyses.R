@@ -280,6 +280,16 @@ ggsave(filename = "mean NE vs facilitation.png",
 spp.interaction.counts.new <- spp.interaction.counts %>%
   pivot_wider(names_from = Interaction.type, values_from = Interaction.count) #expand columns again
 
+##calculate means
+summary_stats <- competitive.df %>%
+  pivot_longer(cols = NNR:CE, names_to = "index.name", values_to = "index.value") %>%
+  mutate(index.name = replace(index.name, index.name == 'CE', 'Neighbour effect')) %>%
+  mutate(index.name = replace(index.name, index.name == 'NNR', 'Neighbour response')) %>%
+  group_by(Plant.identity, Nutrients, index.name) %>%
+  summarize(mean_value = mean(index.value, na.rm = TRUE),
+            se_value = sd(index.value, na.rm = TRUE) / sqrt(n()),
+            .groups = "drop")
+
 ##join with summary stats and format for export
 tables5 <- summary_stats %>%
   rename(metric = index.name) %>%
