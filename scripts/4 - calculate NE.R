@@ -68,11 +68,11 @@ print(CE.interaction.counts)
 #find min and max CE values
 min(dat.CE$CE, na.rm = TRUE)
 ## as proportional growth reduction
-100 - (exp(min(dat.CE$CE, na.rm = TRUE))*100)
+exp(min(dat.CE$CE, na.rm = TRUE))*100
 
 max(dat.CE$CE, na.rm = TRUE)
 ## as proportional growth enhancement
-100 - (exp(max(dat.CE$CE, na.rm = TRUE))*100)
+exp(max(dat.CE$CE, na.rm = TRUE))*100
 
 ##plot
 CE.interaction.counts.plot <-ggplot(dat = CE.interaction.counts, aes(x=Interaction.type, y = Interaction.count, fill = Nutrients)) + 
