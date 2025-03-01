@@ -22,8 +22,7 @@ library(lmerTest)
 ggthemr("fresh")
 palette_colors <- ggthemr::swatch()
 
-#setwd("C:/Users/emilyh/Documents/GitHub/Mesocosm_networks")
-setwd("~/Documents/GitHub/Mesocosm networks/Mesocosm_networks")
+setwd("/Users/emilyholden/Documents/GitHub/Analyses/Reframing-plant-strategies")
 
 #### import data ####
 ## read in biomass data for sacrificed plants

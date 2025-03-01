@@ -24,9 +24,7 @@ library(ggthemr)
 library(cowplot)
 library(broom)
 
-
-#setwd("C:/Users/emilyh/Documents/GitHub/Mesocosm_networks")
-setwd("~/Documents/GitHub/Mesocosm networks/Mesocosm_networks")
+setwd("/Users/emilyholden/Documents/GitHub/Analyses/Reframing-plant-strategies")
 
 ##prep colour palettes
 ggthemr("fresh")
