@@ -32,8 +32,17 @@ NE.df <- read_rds("output/CE df.rds") %>%
 str(NE.df)
 
 ##check for duplicate rows
-NR.df %>% count(Pot, pot.position, Plant.identity, Neighbour.identity, Nutrients, sort = TRUE)
-NE.df %>% count(Pot, pot.position, Plant.identity, Neighbour.identity, Nutrients, sort = TRUE)
+# Find duplicated key combinations in NR.df
+NR_duplicates <- NR.df %>%
+  count(Pot, pot.position, Plant.identity, Neighbour.identity, Nutrients) %>%
+  filter(n > 1)  # Keep only those with multiple occurrences
+NR_duplicates
+
+# Find duplicated key combinations in NE.df
+NE_duplicates <- NE.df %>%
+  count(Pot, pot.position, Plant.identity, Neighbour.identity, Nutrients) %>%
+  filter(n > 1)  # Keep only those with multiple occurrences
+NE_duplicates
 
 ##summarize data
 competitive.df <- NR.df %>%
@@ -69,7 +78,7 @@ ggsave(filename = "interaction strength boxplot.png",
 
 #### table ####
 interactions.summary <- competitive.df %>%
-  group_by(interaction.type, metric, Nutrients) %>%
+  group_by(metric, interaction.type, Nutrients) %>%
   summarise(mean.abs.interaction.strength = round(mean(interaction.strength), digits = 3),
             se.abs.interaction.strength = round(sd(interaction.strength)/sqrt(length(interaction.strength)), digits = 3),
             "Median absolute interaction strength" = round(median(interaction.strength), digits = 3)) %>%
