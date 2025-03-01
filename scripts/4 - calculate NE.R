@@ -66,13 +66,13 @@ CE.interaction.counts <- dat.CE %>%
 print(CE.interaction.counts)
 
 #find min and max CE values
-min(CE$CE)
+min(dat.CE$CE, na.rm = TRUE)
 ## as proportional reduction
-exp(min(CE$CE, na.rm = TRUE))*100
+exp(min(dat.CE$CE, na.rm = TRUE))*100
 
-max(CE$CE)
+max(dat.CE$CE, na.rm = TRUE)
 ## as proportional reduction
-exp(max(CE$CE, na.rm = TRUE))*100
+exp(max(dat.CE$CE, na.rm = TRUE))*100
 
 ##plot
 CE.interaction.counts.plot <-ggplot(dat = CE.interaction.counts, aes(x=Interaction.type, y = Interaction.count, fill = Nutrients)) + 
@@ -93,6 +93,7 @@ ggsave(filename = "CE interaction counts.png",
        units = "in"
 )
 
+#### compare NE to plant initial size ####
 #select initial size columns I want
 initial.bio.for.CE <- initial.bio %>%
   dplyr::select(Pot, Plant.identity, pot.position, Height, initial_biomass)
