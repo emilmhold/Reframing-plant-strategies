@@ -1,7 +1,7 @@
 ## Compare facilitation vs. competition frequency and interaction strength
 ## Author: Emily H
 ## Created: September 20, 2024
-## Last edited: January 30, 2025
+## Last edited: March 1, 2025
 
 #install.packages("tidyverse")
 #install.packages("vegan")
@@ -31,9 +31,9 @@ NE.df <- read_rds("output/CE df.rds") %>%
   dplyr::select(Pot, pot.position, Plant.identity, Neighbour.identity, Nutrients, CE)
 str(NE.df)
 
-##join dfs 
+##summarize data
 competitive.df <- NR.df %>%
-  full_join(NE.df, by = c("Plant.identity", "Neighbour.identity", "Nutrients", "Pot", "pot.position"), relationship = "many-to-many") %>%
+  left_join(NE.df, by = c("Plant.identity", "Neighbour.identity", "Nutrients")) %>%
   filter(!is.na(total.biomass)) %>%
   mutate(NR = if_else(NNR<0,"Competition", "Facilitation"), # create columns to id interaction type
          NE = if_else(CE<0,"Competition", "Facilitation"),
@@ -43,7 +43,6 @@ competitive.df <- NR.df %>%
   pivot_longer(cols = abs.NE:abs.NR, names_to = "abs.metric", values_to = "interaction.strength") %>%
   mutate(metric = replace(metric, metric == 'NE', 'Neighbour effect')) %>%
   mutate(metric = replace(metric, metric == 'NR', 'Neighbour response'))
-str(competitive.df)    
 
 #### boxplot ####
 abs.interactions.boxplot <- ggplot(competitive.df, aes(x=interaction.type, y=interaction.strength, fill = Nutrients)) + 
@@ -53,7 +52,6 @@ abs.interactions.boxplot <- ggplot(competitive.df, aes(x=interaction.type, y=int
   xlab("Interaction type") + 
   theme_classic(base_size = 18)
 abs.interactions.boxplot
-
 
 ##export image
 ggsave(filename = "interaction strength boxplot.png", 
