@@ -55,11 +55,11 @@ hist(dat.CE$CE)
 write_rds(dat.CE, "output/CE df.rds")
 
 #### prevalence of positive vs. negative interactions ####
-CE.interaction.counts <- CE %>%
+CE.interaction.counts <- dat.CE %>%
   group_by(Nutrients) %>%
-  summarise(facilitation = sum(CE>0),
-            competition = sum(CE<0),
-            total.interactions = length(CE)) %>%
+  summarise(facilitation = sum(CE>0, na.rm = TRUE),
+            competition = sum(CE<0, na.rm = TRUE),
+            total.interactions = sum(!is.na(CE))) %>%
   mutate(percent.pos = facilitation/total.interactions*100,
          percent.neg = competition/total.interactions*100) %>%
   pivot_longer(cols = c(facilitation, competition), names_to = "Interaction.type", values_to = "Interaction.count")
