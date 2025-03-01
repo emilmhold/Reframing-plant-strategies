@@ -26,7 +26,7 @@ setwd("/Users/emilyholden/Documents/GitHub/Analyses/Reframing-plant-strategies")
 
 #### correlations among initial size and CE ####
 ##import data
-CE.comparison <- read_rds("output/competitive effect df.rds")
+CE.comparison <- read_rds("output/CE df.rds")
 str(CE.comparison)
 
 #check distribution of variables
