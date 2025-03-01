@@ -26,7 +26,17 @@ setwd("/Users/emilyholden/Documents/GitHub/Analyses/Reframing-plant-strategies")
 
 #### correlations among initial size and CE ####
 ##import data
-CE.comparison <- read_rds("output/CE df.rds")
+# read in initial size measures and biomass estimates for meso plants
+initial.bio <- read_rds("output/meso initial biomasses.rds") %>%
+  rename(Plant.identity = Species,
+         initial.height = Height) %>%
+  filter(initial_biomass > 0) %>% #remove impossible numbers
+  dplyr::select(Pot, Block, pot.position, Plant.identity, initial.height, initial_biomass)
+str(initial.bio)
+
+##import CE data
+CE.comparison <- read_rds("output/CE df.rds") %>%
+  full_join(initial.bio, by = c("Pot", "Block", "pot.position", "Plant.identity"))
 str(CE.comparison)
 
 #check distribution of variables
@@ -82,15 +92,9 @@ CE.initial.biomass.plot <- ggplot(data = CE.comparison, aes(x = initial_biomass,
 CE.initial.biomass.plot
 
 #### correlations among initial size and CR ####
-##rename species column in initial.bio
-initial.bio <- initial.bio %>% rename(Plant.identity = Species)
-
 ##import data
 CR.comparison <- read_rds("output/NNR df.rds") %>%
   left_join(initial.bio, by = c("Pot", "Plant.identity", "pot.position")) %>%
-  dplyr::select(!Block.y) %>%
-  dplyr::rename(initial.height = Height,
-                Block = Block.x) %>%
   filter(initial_biomass > 0) #remove impossible numbers
 str(CR.comparison)
 
