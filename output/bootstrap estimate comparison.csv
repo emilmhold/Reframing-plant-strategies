@@ -1,0 +1,5 @@
+Coefficient,Initial,Bootstrap_Mean,Lower_CI,Upper_CI,In_CI
+(Intercept),0.684,0.157,-0.215,0.597,FALSE
+wneighbourWith neighbour,0.133,0.157,-0.215,0.597,TRUE
+NutrientsUnfertilized,-0.119,0.157,-0.215,0.597,TRUE
+wneighbourWith neighbour:NutrientsUnfertilized,0.116,0.157,-0.215,0.597,TRUE
