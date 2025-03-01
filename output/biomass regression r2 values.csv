@@ -1,0 +1,17 @@
+Species,Best size variable,Best R2 value,Best slope coefficient,Best y-intercept
+Ast fal,Height + Width + Number of leaves,1,0.063,-0.025
+Bro ine,Height + Width + Number of leaves,0.481,-0.002,-0.02
+Poa pra,Height + Width + Number of leaves,0.984,-0.014,0.012
+Sti vir,Height + Width,0.993,0.006,-0.026
+Gai ari,Height + Width + Number of leaves,0.998,-0.002,-0.04
+Hed alp,Height + Width + Number of leaves,1,-0.006,-0.041
+Ely tra,Height + Width + Number of leaves,0.948,-0.013,0.023
+Geu tri,Height + Width + Number of leaves,0.998,0.038,-0.05
+Ast lae,Height + Width + Number of leaves,1,-0.008,-0.023
+Sti com,Height + Width + Number of leaves,0.987,0.013,-0.067
+Koe mac,Height + Width + Number of leaves,0.985,0.043,-0.007
+Bou gra,Height + Width + Number of leaves,0.997,0.002,-0.025
+Fra vir,Height + Width + Number of leaves,0.976,-0.024,0.005
+Tra dub,Height + Width + Number of leaves,0.875,-0.001,-0.053
+Pot arg,Height + Width + Number of leaves,0.657,-0.002,-0.017
+Ane pat,Height + Number of leaves,1,0.006,-0.01
