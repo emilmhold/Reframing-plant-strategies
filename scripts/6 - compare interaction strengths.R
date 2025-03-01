@@ -23,7 +23,7 @@ setwd("/Users/emilyholden/Documents/GitHub/Analyses/Reframing-plant-strategies")
 #### import data ####
 ## import NR (neighbour response) data
 NR.df <- read_rds("output/NNR df.rds") %>%
-  dplyr::select(Pot, Block, pot.position, Plant.identity, Neighbour.identity, Nutrients, total.biomass, NNR)
+  dplyr::select(Pot, pot.position, Block, Plant.identity, Neighbour.identity, Nutrients, total.biomass, NNR)
 str(NR.df)
 
 ##import NE (neighbour effect) data
@@ -31,9 +31,13 @@ NE.df <- read_rds("output/CE df.rds") %>%
   dplyr::select(Pot, pot.position, Plant.identity, Neighbour.identity, Nutrients, CE)
 str(NE.df)
 
+##check for duplicate rows
+NR.df %>% count(Pot, pot.position, Plant.identity, Neighbour.identity, Nutrients, sort = TRUE)
+NE.df %>% count(Pot, pot.position, Plant.identity, Neighbour.identity, Nutrients, sort = TRUE)
+
 ##summarize data
 competitive.df <- NR.df %>%
-  left_join(NE.df, by = c("Plant.identity", "Neighbour.identity", "Nutrients")) %>%
+  left_join(NE.df, by = c("Pot", "pot.position", "Plant.identity", "Neighbour.identity", "Nutrients")) %>%
   filter(!is.na(total.biomass)) %>%
   mutate(NR = if_else(NNR<0,"Competition", "Facilitation"), # create columns to id interaction type
          NE = if_else(CE<0,"Competition", "Facilitation"),
@@ -43,6 +47,7 @@ competitive.df <- NR.df %>%
   pivot_longer(cols = abs.NE:abs.NR, names_to = "abs.metric", values_to = "interaction.strength") %>%
   mutate(metric = replace(metric, metric == 'NE', 'Neighbour effect')) %>%
   mutate(metric = replace(metric, metric == 'NR', 'Neighbour response'))
+str(competitive.df)
 
 #### boxplot ####
 abs.interactions.boxplot <- ggplot(competitive.df, aes(x=interaction.type, y=interaction.strength, fill = Nutrients)) + 
@@ -65,8 +70,7 @@ ggsave(filename = "interaction strength boxplot.png",
 #### table ####
 interactions.summary <- competitive.df %>%
   group_by(interaction.type, metric, Nutrients) %>%
-  summarise("Count of interactions" = length(interaction.strength),
-            mean.abs.interaction.strength = round(mean(interaction.strength), digits = 3),
+  summarise(mean.abs.interaction.strength = round(mean(interaction.strength), digits = 3),
             se.abs.interaction.strength = round(sd(interaction.strength)/sqrt(length(interaction.strength)), digits = 3),
             "Median absolute interaction strength" = round(median(interaction.strength), digits = 3)) %>%
   mutate("Mean absolute interaction strength" = paste(mean.abs.interaction.strength, "\u00B1", se.abs.interaction.strength)) %>%
